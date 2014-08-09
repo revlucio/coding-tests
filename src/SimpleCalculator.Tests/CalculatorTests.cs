@@ -10,7 +10,7 @@ namespace SimpleCalculator.Tests
         [SetUp]
         public void BeforeEachTest()
         {
-            _calculator = new Calculator();
+            _calculator = new Calculator(new OperationFactory());
         }
 
         [TestCase(1, 2, "+", 3)]

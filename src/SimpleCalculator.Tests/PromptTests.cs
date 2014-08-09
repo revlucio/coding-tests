@@ -20,7 +20,7 @@ namespace SimpleCalculator.Tests
         {
             _console = A.Fake<IConsole>();
             _logger = A.Fake<ILogger>();
-            _prompt = new Prompt(_console, new Calculator(), new Validator(new OperationFactory()), _logger);
+            _prompt = new Prompt(_console, new Calculator(new OperationFactory()), new Validator(new OperationFactory()), _logger);
         }
 
         [Test]

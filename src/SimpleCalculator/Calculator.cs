@@ -1,19 +1,21 @@
 ﻿
+
 namespace SimpleCalculator
 {
     public class Calculator : ICalculator
     {
+        private readonly IOperationFactory _operationFactory;
+
+        public Calculator(IOperationFactory operationFactory)
+        {
+            _operationFactory = operationFactory;
+        }
+
         public int Parse(int x, int y, string operation)
         {
-            switch (operation)
-            {
-                case "+":
-                    return x + y;
-                case "-":
-                    return x - y;
-            }
-
-            return 0;
+            return _operationFactory.Operations.ContainsKey(operation) 
+                ? _operationFactory.Operations[operation](x, y) 
+                : 0;
         }
     }
 }
