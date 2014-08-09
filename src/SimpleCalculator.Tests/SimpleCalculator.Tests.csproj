@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FakeItEasy">
+      <HintPath>..\SimpleCalculator\packages\FakeItEasy.1.23.0\lib\net40\FakeItEasy.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\SimpleCalculator\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -53,11 +56,17 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="CalculatorTests.cs" />
+    <Compile Include="PromptTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SimpleCalculator\SimpleCalculator.csproj">
+      <Project>{C955392D-4F09-4E4C-9A70-D3E1E8CB1966}</Project>
+      <Name>SimpleCalculator</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
