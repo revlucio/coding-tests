@@ -11,7 +11,7 @@ namespace SimpleCalculator.Tests
         [TestCase("1.5", null, TestName = "ReturnsInvalidIfDecimal")]
         public void IsValidNumber(string input, int? expected)
         {
-            IValidator validator = new Validator();
+            IValidator validator = new Validator(new OperationFactory());
             Assert.That(validator.ToValidNumber(input), Is.EqualTo(expected));
         }
 
@@ -20,7 +20,7 @@ namespace SimpleCalculator.Tests
         [TestCase("*", false, TestName = "ReturnsFalseIfMultiplication")]
         public void IsValidOperation(string input, bool expected)
         {
-            IValidator validator = new Validator();
+            IValidator validator = new Validator(new OperationFactory());
             Assert.That(validator.IsValidOperation(input), Is.EqualTo(expected));
         }
     }

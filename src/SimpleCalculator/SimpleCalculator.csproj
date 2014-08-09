@@ -44,8 +44,12 @@
   <ItemGroup>
     <Compile Include="Calculator.cs" />
     <Compile Include="ConsoleWrapper.cs" />
+    <Compile Include="FakeLogger.cs" />
     <Compile Include="ICalculator.cs" />
+    <Compile Include="ILogger.cs" />
+    <Compile Include="IOperationFactory.cs" />
     <Compile Include="IValidator.cs" />
+    <Compile Include="OperationFactory.cs" />
     <Compile Include="Prompt.cs" />
     <Compile Include="IConsole.cs" />
     <Compile Include="Program.cs" />

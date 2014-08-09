@@ -1,7 +1,16 @@
-﻿namespace SimpleCalculator
+﻿using System.Linq;
+
+namespace SimpleCalculator
 {
     public class Validator : IValidator
     {
+        private readonly IOperationFactory _operationFactory;
+        
+        public Validator(IOperationFactory operationFactory)
+        {
+            _operationFactory = operationFactory;
+        }
+
         /// <summary>
         /// Tries to parse to an int and returns null if it can't
         /// </summary>
@@ -15,10 +24,7 @@
 
         public bool IsValidOperation(string operation)
         {
-            if (operation == "+") return true;
-            if (operation == "-") return true;
-
-            return false;
+            return _operationFactory.ValidOperations.Any(o => o == operation);
         }
     }
 }

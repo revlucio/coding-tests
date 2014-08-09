@@ -7,6 +7,7 @@ namespace SimpleCalculator.Tests
     public class PromptTests
     {
         private IConsole _console;
+        private ILogger _logger;
         private Prompt _prompt;
 
         private void SetupConsole(params string[] consoleInputs)
@@ -18,7 +19,8 @@ namespace SimpleCalculator.Tests
         public void BeforeEachTest()
         {
             _console = A.Fake<IConsole>();
-            _prompt = new Prompt(_console, new Calculator(), new Validator());
+            _logger = A.Fake<ILogger>();
+            _prompt = new Prompt(_console, new Calculator(), new Validator(new OperationFactory()), _logger);
         }
 
         [Test]
@@ -104,10 +106,29 @@ namespace SimpleCalculator.Tests
         [TestCase("3", "2", "-", 1)]
         public void Run_AfterOperatorEntered_ShouldOutputResult(string num1, string num2, string operation, int expectedResult)
         {
+            SetupConsole(num1, num2, operation);
+            _prompt.Run();
+
+            A.CallTo(() => _console.WriteLine("Result: {0}", new object[] {expectedResult})).MustHaveHappened();
+        }
+
+        #region logging tests
+        [Test]
+        public void Run__WhenFirstCalled_ShouldLog()
+        {
+            _prompt.Run();
+
+            A.CallTo(() => _logger.Log("Calculator started")).MustHaveHappened();
+        }
+
+        [Test]
+        public void Run_AfterResultDisplayed_ShouldLog()
+        {
             SetupConsole("2", "3", "+");
             _prompt.Run();
 
-            A.CallTo(() => _console.WriteLine("Result: {0}", new object[] {5})).MustHaveHappened();
+            A.CallTo(() => _logger.Log("Calculator finished. User entered 2 + 3 and result was 5")).MustHaveHappened();
         }
+        #endregion
     }
 }
