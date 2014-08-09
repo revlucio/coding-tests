@@ -14,34 +14,40 @@ namespace SimpleCalculator
             _validator = validator;
         }
 
-        public void Run()
+        private string ReadNumber(string inputMessage)
         {
-            _console.WriteLine("Enter a number: ");
-            var firstNumber = _console.Read();
+            _console.WriteLine(inputMessage);
+            var number = _console.Read();
 
-            if (!_validator.IsValidNumber(firstNumber))
-            {
-                _console.WriteLine("Invalid input please restart");
-                return;
-            }
-            
-            _console.WriteLine("Enter another number: ");
-            var secondNumber = _console.Read();
+            if (_validator.IsValidNumber(number)) 
+                return number;
 
-            if (!_validator.IsValidNumber(secondNumber))
-            {
-                _console.WriteLine("Invalid input please restart");
-                return;
-            }
+            _console.WriteLine("Invalid input please restart");
+            return null;
+        }
 
-            _console.WriteLine("Enter an operator (+ or -): ");
+        private string ReadOperation(string inputMessage)
+        {
+            _console.WriteLine(inputMessage);
             var operation = _console.Read();
 
-            if (!_validator.IsValidOperation(operation))
-            {
-                _console.WriteLine("Invalid input please restart");
-                return;
-            }
+            if (_validator.IsValidOperation(operation))
+                return operation;
+
+            _console.WriteLine("Invalid input please restart");
+            return null;
+        }
+
+        public void Run()
+        {
+            var firstNumber = ReadNumber("Enter a number: ");
+            if (firstNumber == null) return;
+
+            var secondNumber = ReadNumber("Enter another number: ");
+            if (secondNumber == null) return;
+
+            var operation = ReadOperation("Enter an operator (+ or -): ");
+            if (operation == null) return;
 
             var result = _calculator.Parse(firstNumber, secondNumber, operation);
             _console.WriteLine("Result: {0}", result);
