@@ -2,7 +2,7 @@ namespace SimpleCalculator
 {
     public interface IValidator
     {
-        bool IsValidNumber(string input);
+        int? ToValidNumber(string input);
         bool IsValidOperation(string operation);
     }
 }

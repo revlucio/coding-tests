@@ -2,6 +2,6 @@ namespace SimpleCalculator
 {
     public interface ICalculator
     {
-        int Parse(string x, string y, string operation);
+        int Parse(int x, int y, string operation);
     }
 }

@@ -1,4 +1,5 @@
 ﻿
+
 namespace SimpleCalculator
 {
     public class Prompt
@@ -14,16 +15,31 @@ namespace SimpleCalculator
             _validator = validator;
         }
 
-        private string ReadNumber(string inputMessage)
+        public void Run()
+        {
+            var firstNumber = ReadNumber("Enter a number: ");
+            if (firstNumber == null) return;
+
+            var secondNumber = ReadNumber("Enter another number: ");
+            if (secondNumber == null) return;
+
+            var operation = ReadOperation("Enter an operator (+ or -): ");
+            if (operation == null) return;
+
+            var result = _calculator.Parse(firstNumber.Value, secondNumber.Value, operation);
+            _console.WriteLine("Result: {0}", result);
+        }
+
+        private int? ReadNumber(string inputMessage)
         {
             _console.WriteLine(inputMessage);
-            var number = _console.Read();
 
-            if (_validator.IsValidNumber(number)) 
-                return number;
+            var number = _validator.ToValidNumber(_console.Read());
 
-            _console.WriteLine("Invalid input please restart");
-            return null;
+            if (number == null)
+                _console.WriteLine("Invalid input please restart");
+
+            return number;
         }
 
         private string ReadOperation(string inputMessage)
@@ -36,21 +52,6 @@ namespace SimpleCalculator
 
             _console.WriteLine("Invalid input please restart");
             return null;
-        }
-
-        public void Run()
-        {
-            var firstNumber = ReadNumber("Enter a number: ");
-            if (firstNumber == null) return;
-
-            var secondNumber = ReadNumber("Enter another number: ");
-            if (secondNumber == null) return;
-
-            var operation = ReadOperation("Enter an operator (+ or -): ");
-            if (operation == null) return;
-
-            var result = _calculator.Parse(firstNumber, secondNumber, operation);
-            _console.WriteLine("Result: {0}", result);
         }
     }
 }
