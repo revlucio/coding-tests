@@ -18,7 +18,7 @@ namespace SimpleCalculator.Tests
         public void BeforeEachTest()
         {
             _console = A.Fake<IConsole>();
-            _prompt = new Prompt(_console, new Calculator());
+            _prompt = new Prompt(_console, new Calculator(), new Validator());
         }
 
         [Test]
@@ -35,6 +35,15 @@ namespace SimpleCalculator.Tests
             _prompt.Run();
 
             A.CallTo(() => _console.Read()).MustHaveHappened();
+        }
+
+        [Test]
+        public void Run_AfterFirstNumberEntered_IfInvalidWritesMessage()
+        {
+            A.CallTo(() => _console.Read()).Returns("x");
+            _prompt.Run();
+
+            A.CallTo(() => _console.WriteLine("Invalid input please restart")).MustHaveHappened();
         }
 
         [Test]
@@ -56,6 +65,15 @@ namespace SimpleCalculator.Tests
         }
 
         [Test]
+        public void Run_AfterSecondNumberEntered_IfInvalidWritesMessage()
+        {
+            SetupConsole("2", "x");
+            _prompt.Run();
+
+            A.CallTo(() => _console.WriteLine("Invalid input please restart")).MustHaveHappened();
+        }
+
+        [Test]
         public void Run_AfterSecondNumberEntered_ShouldPromptForOperator()
         {
             SetupConsole("2", "3");
@@ -71,6 +89,15 @@ namespace SimpleCalculator.Tests
             _prompt.Run();
 
             A.CallTo(() => _console.Read()).MustHaveHappened(Repeated.Exactly.Times(3));
+        }
+
+        [Test]
+        public void Run_AfterOperatorEntered_IfInvalidWritesMessage()
+        {
+            SetupConsole("2", "4", "x");
+            _prompt.Run();
+
+            A.CallTo(() => _console.WriteLine("Invalid input please restart")).MustHaveHappened();
         }
 
         [TestCase("2", "3", "+", 5)]
