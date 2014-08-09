@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Calculator.cs" />
     <Compile Include="ICalculator.cs" />
     <Compile Include="Prompt.cs" />
     <Compile Include="IConsole.cs" />

@@ -8,7 +8,6 @@ namespace SimpleCalculator.Tests
     {
         private IConsole _console;
         private Prompt _prompt;
-        private ICalculator _calculator;
 
         private void SetupConsole(params string[] consoleInputs)
         {
@@ -19,8 +18,7 @@ namespace SimpleCalculator.Tests
         public void BeforeEachTest()
         {
             _console = A.Fake<IConsole>();
-            _calculator = A.Fake<ICalculator>();
-            _prompt = new Prompt(_console, _calculator);
+            _prompt = new Prompt(_console, new Calculator());
         }
 
         [Test]
@@ -75,31 +73,14 @@ namespace SimpleCalculator.Tests
             A.CallTo(() => _console.Read()).MustHaveHappened(Repeated.Exactly.Times(3));
         }
 
-        [Test]
-        public void Run_AfterOperatorEntered_ShouldCallCalculator()
+        [TestCase("2", "3", "+", 5)]
+        [TestCase("3", "2", "-", 1)]
+        public void Run_AfterOperatorEntered_ShouldOutputResult(string num1, string num2, string operation, int expectedResult)
         {
             SetupConsole("2", "3", "+");
             _prompt.Run();
 
-            A.CallTo(() => _calculator.Parse("2", "3", "+")).MustHaveHappened();
-        }
-
-        [Test]
-        public void Run_AfterAdditionOperatorEntered_ShouldOutputResult()
-        {
-            SetupConsole("2", "3", "+");
-            _prompt.Run();
-
-            A.CallTo(() => _console.WriteLine("Result: 5")).MustHaveHappened();
-        }
-
-        [Test]
-        public void Run_AfterSubtractionOperatorEntered_ShouldOutputResult()
-        {
-            SetupConsole("3", "2", "1");
-            _prompt.Run();
-
-            A.CallTo(() => _console.WriteLine("Result: 1")).MustHaveHappened();
+            A.CallTo(() => _console.WriteLine("Result: {0}", new object[] {5})).MustHaveHappened();
         }
     }
 }
