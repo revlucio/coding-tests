@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using System;
 
 namespace WordSearch
 {
@@ -10,6 +7,12 @@ namespace WordSearch
     {
         static void Main(string[] args)
         {
+            var wordSearcher = new WordSearcher(new WordLoader(@"http://dl.dropboxusercontent.com/u/7543760/wordlist.txt"));
+
+            var length = int.Parse(args[0]);
+            var matchingWords = wordSearcher.FindMatches(length, args[1]);
+
+            matchingWords.ForEach(Console.WriteLine);
         }
     }
 }
