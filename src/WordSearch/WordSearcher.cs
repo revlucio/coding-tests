@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -19,7 +18,10 @@ namespace WordSearch
             var words = _wordLoader.GetWordsFromUrl();
             var filteredWords = words.Where(w => w.Length == length);
 
-            var regex = new Regex(String.Format("{0}", searchWord));
+            var regextString = searchWord.ToCharArray()
+                .Aggregate(".*", (current, c) => current + (c + ".*"));
+
+            var regex = new Regex(regextString);
             filteredWords = filteredWords.Where(w => regex.IsMatch(w));
 
             return filteredWords.OrderBy(w => w).ToList();
