@@ -1,27 +1,25 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace WordSearch
 {
     public class WordSearcher
     {
         private readonly IWordLoader _wordLoader;
+        private readonly IRegexBuilder _regexBuilder;
 
-        public WordSearcher(IWordLoader wordLoader)
+        public WordSearcher(IWordLoader wordLoader, IRegexBuilder regexBuilder)
         {
             _wordLoader = wordLoader;
+            _regexBuilder = regexBuilder;
         }
 
         public List<string> FindMatches(int length, string searchWord)
         {
             var words = _wordLoader.GetWordsFromUrl();
             var filteredWords = words.Where(w => w.Length == length);
-
-            var regextString = searchWord.ToCharArray()
-                .Aggregate(".*", (current, c) => current + (c + ".*"));
-
-            var regex = new Regex(regextString);
+            
+            var regex = _regexBuilder.GetRegex(searchWord);
             filteredWords = filteredWords.Where(w => regex.IsMatch(w));
 
             return filteredWords.OrderBy(w => w).ToList();

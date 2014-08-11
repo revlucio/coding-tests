@@ -15,7 +15,7 @@ namespace WordSearch.Tests
             var words = new List<string>() { "a", "ab", "abc", "aef", "ah", "abcd", "acb" };
             var wordLoader = A.Fake<IWordLoader>();
             A.CallTo(() => wordLoader.GetWordsFromUrl()).Returns(words);
-            _wordSearcher = new WordSearcher(wordLoader);
+            _wordSearcher = new WordSearcher(wordLoader, new RegexBuilder());
         }
 
         [TestCase(1, 1)]
