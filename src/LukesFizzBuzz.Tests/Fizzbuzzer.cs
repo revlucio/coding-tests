@@ -13,24 +13,24 @@ namespace LukesFizzBuzz.Tests
                 .Aggregate((x, y) => x + " " + y);
         }
 
-        private static string ConvertToFizzBuzz(int x)
+        private static string ConvertToFizzBuzz(int number)
         {
-            if (x % 3 == 0 && x % 5 == 0)
+            if (number.IsDivisibleBy(3) && number.IsDivisibleBy(5))
             {
                 return "fizzbuzz";
             }
 
-            if (x % 3 == 0)
+            if (number.IsDivisibleBy(3))
             {
                 return "fizz";
             }
 
-            if (x % 5 == 0)
+            if (number.IsDivisibleBy(5))
             {
                 return "buzz";
             }
 
-            return x.ToString();
+            return number.ToString();
         }
     }
 }
