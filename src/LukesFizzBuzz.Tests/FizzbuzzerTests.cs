@@ -17,7 +17,19 @@ namespace LukesFizzBuzz.Tests
 
             var result = fizzbuzzer.Run(from, to);
 
-            result.ShouldBe(expected);
+            result[0].ShouldBe(expected);
+        }
+
+        [TestCase(1, 2, "fizz: 0 buzz: 0 fizzbuzz: 0 lucky: 0 integer: 2")]
+        [TestCase(1, 5, "fizz: 0 buzz: 1 fizzbuzz: 0 lucky: 1 integer: 3")]
+        [TestCase(1, 20, "fizz: 4 buzz: 3 fizzbuzz: 1 lucky: 2 integer: 10")]
+        public void GivenRangeOfNumbers_ThenOutputsReport(int from, int to, string expected)
+        {
+            var fizzbuzzer = new Fizzbuzzer();
+
+            var result = fizzbuzzer.Run(from, to);
+
+            result[1].ShouldBe(expected);
         }
     }
 }
