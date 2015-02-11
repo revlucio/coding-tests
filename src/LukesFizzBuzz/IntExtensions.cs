@@ -6,5 +6,10 @@
         {
             return (dividend % divisor == 0);
         }
+
+        public static bool ContainsDigit(this int number, int digit)
+        {
+            return (number.ToString().Contains(digit.ToString()));
+        }
     }
 }

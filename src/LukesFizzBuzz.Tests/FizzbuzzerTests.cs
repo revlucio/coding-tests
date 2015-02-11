@@ -7,9 +7,10 @@ namespace LukesFizzBuzz.Tests
     public class FizzbuzzerTests
     {
         [TestCase(1, 2, "1 2")]
-        [TestCase(1, 4, "1 2 fizz 4")]
-        [TestCase(1, 7, "1 2 fizz 4 buzz fizz 7")]
-        [TestCase(10, 16, "buzz 11 fizz 13 14 fizzbuzz 16")]
+        [TestCase(1, 4, "1 2 lucky 4")]
+        [TestCase(1, 7, "1 2 lucky 4 buzz fizz 7")]
+        [TestCase(10, 16, "buzz 11 fizz lucky 14 fizzbuzz 16")]
+        [TestCase(1, 15, "1 2 lucky 4 buzz fizz 7 8 fizz buzz 11 fizz lucky 14 fizzbuzz")]
         public void GivenRangeOfNumbers_ThenOutputsWithSpaces(int from, int to, string expected)
         {
             var fizzbuzzer = new Fizzbuzzer();

@@ -16,6 +16,11 @@ namespace LukesFizzBuzz
 
         private static string ConvertToFizzBuzz(int x)
         {
+            if (x.ContainsDigit(3))
+            {
+                return "lucky";
+            }
+
             if (x.IsDivisibleBy(3) && x.IsDivisibleBy(5))
             {
                 return "fizzbuzz";
