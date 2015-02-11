@@ -57,11 +57,17 @@
   </Choose>
   <ItemGroup>
     <Compile Include="FizzbuzzerTests.cs" />
-    <Compile Include="Fizzbuzzer.cs" />
+    <Compile Include="IntExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LukesFizzBuzz\LukesFizzBuzz.csproj">
+      <Project>{F11D5CD4-C3F7-4971-A91F-F53AD50AE4E6}</Project>
+      <Name>LukesFizzBuzz</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
