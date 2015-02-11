@@ -16,17 +16,17 @@ namespace LukesFizzBuzz
 
         private static string ConvertToFizzBuzz(int x)
         {
-            if (x % 3 == 0 && x % 5 == 0)
+            if (x.IsDivisibleBy(3) && x.IsDivisibleBy(5))
             {
                 return "fizzbuzz";
             }
 
-            if (x % 3 == 0)
+            if (x.IsDivisibleBy(3))
             {
                 return "fizz";
             }
 
-            if (x % 5 == 0)
+            if (x.IsDivisibleBy(5))
             {
                 return "buzz";
             }
