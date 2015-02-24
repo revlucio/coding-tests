@@ -1,68 +1,66 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace LukesFizzBuzz
 {
     public class Fizzbuzzer
     {
-        public List<string> Run(int from, int to)
-        {
-            var fizzbuzz = FizzBuzz(from, to);
+        private int _fizzCount;
+        private int _buzzCount;
+        private int _fizzbuzzCount;
+        private int _luckyCount;
+        private int _integerCount;
 
-            return new List<string>
+        public string Run(int from, int to)
+        {
+            return ConvertToStringWithSpaces(from, to) + GetReport();
+        }
+
+        private string ConvertToStringWithSpaces(int from, int to)
+        {
+            var output = String.Empty;
+
+            for (var i = from; i < (to + 1); i++)
             {
-                fizzbuzz.ConvertToStringWithSpaces(),
-                Report(fizzbuzz)
-            };
+                output += ConvertToFizzBuzz(i) + " ";
+            }
+
+            return output;
         }
 
-        private static List<string> FizzBuzz(int from, int to)
-        {
-            return GetRange(from, to).Select(ConvertToFizzBuzz).ToList();
-        }
-
-        private static string ConvertToFizzBuzz(int x)
+        private string ConvertToFizzBuzz(int x)
         {
             if (x.ContainsDigit(3))
             {
+                _luckyCount++;
                 return "lucky";
             }
 
-            if (x.IsDivisibleBy(3) && x.IsDivisibleBy(5))
+            if (x.IsDivisibleBy(15))
             {
+                _fizzbuzzCount++;
                 return "fizzbuzz";
             }
 
             if (x.IsDivisibleBy(3))
             {
+                _fizzCount++;
                 return "fizz";
             }
 
             if (x.IsDivisibleBy(5))
             {
+                _buzzCount++;
                 return "buzz";
             }
 
+            _integerCount++;
             return x.ToString();
         }
 
-        private static string Report(IReadOnlyCollection<string> list)
+        private string GetReport()
         {
-            var fizzCount = list.Count(x => x == "fizz");
-            var buzzCount = list.Count(x => x == "buzz");
-            var fizzbuzzCount = list.Count(x => x == "fizzbuzz");
-            var luckyCount = list.Count(x => x == "lucky");
-            var integerCount = list.Count -fizzCount - buzzCount - fizzbuzzCount - luckyCount;
-
             return String.Format("fizz: {0} buzz: {1} fizzbuzz: {2} lucky: {3} integer: {4}", 
-                fizzCount, buzzCount, fizzbuzzCount, luckyCount, integerCount);
-        }
-
-        private static IEnumerable<int> GetRange(int from, int to)
-        {
-            var count = to - from + 1;
-            return Enumerable.Range(from, count);
+                _fizzCount, _buzzCount, _fizzbuzzCount, _luckyCount, _integerCount);
         }
     }
 }

@@ -39,7 +39,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="Fizzbuzzer.cs" />
     <Compile Include="IntExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -57,7 +57,6 @@
   </Choose>
   <ItemGroup>
     <Compile Include="FizzbuzzerTests.cs" />
-    <Compile Include="IntExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
