@@ -58,9 +58,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="FileWrapper.cs" />
-    <Compile Include="IFileWrapper.cs" />
-    <Compile Include="ProgramTests.cs" />
+    <Compile Include="WordCounterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

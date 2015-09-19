@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WordCount.UI
 {
@@ -10,6 +6,8 @@ namespace WordCount.UI
     {
         static void Main(string[] args)
         {
+            var wordCounter = new WordCounter(new FileWrapper());
+            Console.WriteLine(wordCounter.RunReport(args[0]));
         }
     }
 }

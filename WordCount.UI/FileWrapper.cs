@@ -1,7 +1,6 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 
-namespace WordCount.Tests
+namespace WordCount.UI
 {
     public class FileWrapper : IFileWrapper
     {
@@ -10,9 +9,9 @@ namespace WordCount.Tests
             return File.Exists(path);
         }
 
-        public string GetConent(string path)
+        public string ReadAllText(string path)
         {
-            throw new NotImplementedException();
+            return File.ReadAllText(path);
         }
     }
 }
