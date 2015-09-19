@@ -1,4 +1,5 @@
-﻿using FakeItEasy;
+﻿using System.IO;
+using FakeItEasy;
 using NUnit.Framework;
 using WordCount.UI;
 
@@ -14,10 +15,8 @@ namespace WordCount.Tests
             var wordCounter = new WordCounter(new FileWrapper());
 
             // act
-            var result = wordCounter.RunReport("badfile.txt");
-
             // assert
-            Assert.That(result, Is.Empty);
+            Assert.Throws<FileNotFoundException>(() => wordCounter.RunReport("badfile.txt"));
         }
 
         [Test]
@@ -25,7 +24,6 @@ namespace WordCount.Tests
         {
             // arrange
             var fileMock = A.Fake<IFileWrapper>();
-            A.CallTo(() => fileMock.Exists(A<string>._)).Returns(true);
             A.CallTo(() => fileMock.ReadAllText(A<string>._)).Returns("test");
             var wordCounter = new WordCounter(fileMock);
 
@@ -45,7 +43,6 @@ namespace WordCount.Tests
         {
             // arrange
             var fileMock = A.Fake<IFileWrapper>();
-            A.CallTo(() => fileMock.Exists(A<string>._)).Returns(true);
             A.CallTo(() => fileMock.ReadAllText(A<string>._)).Returns(content);
             var wordCounter = new WordCounter(fileMock);
 
