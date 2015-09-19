@@ -8,32 +8,6 @@ namespace WordCount.Tests
     [TestFixture]
     public class WordCounterTests
     {
-        [Test]
-        public void GivenFileName_WhenDoesntExist_ReturnsEmpty()
-        {
-            // arrange
-            var wordCounter = new WordCounter(new FileWrapper());
-
-            // act
-            // assert
-            Assert.Throws<FileNotFoundException>(() => wordCounter.RunReport("badfile.txt"));
-        }
-
-        [Test]
-        public void GivenFileName_WhenExists_ReturnsResult()
-        {
-            // arrange
-            var fileMock = A.Fake<IFileWrapper>();
-            A.CallTo(() => fileMock.ReadAllText(A<string>._)).Returns("test");
-            var wordCounter = new WordCounter(fileMock);
-
-            // act
-            var result = wordCounter.RunReport("goodfile.txt");
-
-            // assert
-            Assert.That(result, Is.Not.Empty);
-        }
-
         [TestCase("A simple sentence", "a 1\nsentence 1\nsimple 1")]
         [TestCase("A simple, sentence. Simple! Simple?", "a 1\nsentence 1\nsimple 3")]
         [TestCase("Another simple sentence", "another 1\nsentence 1\nsimple 1")]
@@ -54,6 +28,17 @@ namespace WordCount.Tests
         }
 
         [Test]
+        public void GivenFileName_WhenDoesntExist_ReturnsEmpty()
+        {
+            // arrange
+            var wordCounter = new WordCounter(new FileWrapper());
+
+            // act
+            // assert
+            Assert.Throws<FileNotFoundException>(() => wordCounter.RunReport("badfile.txt"));
+        }
+
+        [Test]
         public void GivenFileName_WhenFileExistsOnDisk_ReturnsReport()
         {
             // arrange
@@ -64,6 +49,31 @@ namespace WordCount.Tests
 
             // assert
             var expected = "a 2\nchuck 4\ncould 1\nhow 1\nif 1\nmuch 1\nwood 4\nwould 1";
+            Assert.That(result, Is.EqualTo(expected));
+        }
+
+        [TestCase("A simpleton sentence", "")]
+        [TestCase("A lbums albums", "albums")]
+        [TestCase("Al bums albums", "albums")]
+        [TestCase("Alb ums albums", "albums")]
+        [TestCase("Albu ms albums", "albums")]
+        [TestCase("Album s albums", "albums")]
+        [TestCase("Albums albums", "")]
+        [TestCase("Bare ly barely Al bums albums", "albums\nbarely")]
+        [TestCase(
+            "al, albums, aver, bar, barely, be, befoul, bums, by, cat, con, convex, ely, foul, here, hereby, jig, jigsaw, or, saw, tail, tailor, vex, we, weaver",
+            "albums\nbarely\nbefoul\nconvex\nhereby\njigsaw\ntailor\nweaver")]
+        public void GivenFileNameToFilter_WhenHasContent_ReturnsFilteredList(string content, string expected)
+        {
+            // arrange
+            var fileMock = A.Fake<IFileWrapper>();
+            A.CallTo(() => fileMock.ReadAllText(A<string>._)).Returns(content);
+            var wordFilter = new WordCounter(fileMock);
+
+            // act
+            var result = wordFilter.GetFilteredWords("goodfile.txt");
+
+            // assert
             Assert.That(result, Is.EqualTo(expected));
         }
     }
