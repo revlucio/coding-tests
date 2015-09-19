@@ -6,7 +6,7 @@ using WordCount.UI;
 namespace WordCount.Tests
 {
     [TestFixture]
-    public class WordCounterTests
+    public class WordReporterTests
     {
         [TestCase("A simple sentence", "a 1\nsentence 1\nsimple 1")]
         [TestCase("A simple, sentence. Simple! Simple?", "a 1\nsentence 1\nsimple 3")]
@@ -18,10 +18,10 @@ namespace WordCount.Tests
             // arrange
             var fileMock = A.Fake<IFileWrapper>();
             A.CallTo(() => fileMock.ReadAllText(A<string>._)).Returns(content);
-            var wordCounter = new WordCounter(fileMock);
+            var wordCounter = new WordReporter(fileMock);
 
             // act
-            var result = wordCounter.RunReport("goodfile.txt");
+            var result = wordCounter.GetWordCounts("goodfile.txt");
 
             // assert
             Assert.That(result, Is.EqualTo(expected));
@@ -31,21 +31,21 @@ namespace WordCount.Tests
         public void GivenFileName_WhenDoesntExist_ReturnsEmpty()
         {
             // arrange
-            var wordCounter = new WordCounter(new FileWrapper());
+            var wordCounter = new WordReporter(new FileWrapper());
 
             // act
             // assert
-            Assert.Throws<FileNotFoundException>(() => wordCounter.RunReport("badfile.txt"));
+            Assert.Throws<FileNotFoundException>(() => wordCounter.GetWordCounts("badfile.txt"));
         }
 
         [Test]
         public void GivenFileName_WhenFileExistsOnDisk_ReturnsReport()
         {
             // arrange
-            var wordCounter = new WordCounter(new FileWrapper());
+            var wordReporter = new WordReporter(new FileWrapper());
 
             // act
-            var result = wordCounter.RunReport("woodchuck.txt");
+            var result = wordReporter.GetWordCounts("woodchuck.txt");
 
             // assert
             var expected = "a 2\nchuck 4\ncould 1\nhow 1\nif 1\nmuch 1\nwood 4\nwould 1";
@@ -68,10 +68,10 @@ namespace WordCount.Tests
             // arrange
             var fileMock = A.Fake<IFileWrapper>();
             A.CallTo(() => fileMock.ReadAllText(A<string>._)).Returns(content);
-            var wordFilter = new WordCounter(fileMock);
+            var wordReporter = new WordReporter(fileMock);
 
             // act
-            var result = wordFilter.GetFilteredWords("goodfile.txt");
+            var result = wordReporter.GetFilteredWords("goodfile.txt");
 
             // assert
             Assert.That(result, Is.EqualTo(expected));

@@ -6,8 +6,13 @@ namespace WordCount.UI
     {
         static void Main(string[] args)
         {
-            var wordCounter = new WordCounter(new FileWrapper());
-            Console.WriteLine(wordCounter.RunReport(args[0]));
+            var wordCounter = new WordReporter(new FileWrapper());
+
+            if (args[1] == "count")
+                Console.WriteLine(wordCounter.GetWordCounts(args[0]));
+
+            if (args[1] == "filter")
+                Console.WriteLine(wordCounter.GetFilteredWords(args[0]));
         }
     }
 }

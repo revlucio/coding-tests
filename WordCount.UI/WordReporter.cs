@@ -4,16 +4,16 @@ using WordCount.Tests;
 
 namespace WordCount.UI
 {
-    public class WordCounter
+    public class WordReporter
     {
         private readonly IFileWrapper _fileWrapper;
 
-        public WordCounter(IFileWrapper fileWrapper)
+        public WordReporter(IFileWrapper fileWrapper)
         {
             _fileWrapper = fileWrapper;
         }
 
-        public string RunReport(string filename)
+        public string GetWordCounts(string filename)
         {
             var words = GetWords(filename);
 
